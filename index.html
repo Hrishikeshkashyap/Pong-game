@@ -137,11 +137,13 @@
 			}
 			document.onkeydown = anim;
 			right.onclick = function(){
+				event.preventDefault();
 				batleft+=batspeed;
 				bat.style.left = batleft + '%';
 				if(batleft>=62)batleft-=batspeed;
 			};
 			left.onclick = function(){
+				event.preventDefault();
 				batleft-=batspeed;
 				bat.style.left = batleft + '%';
 				if(batleft<=22)batleft+=batspeed;
