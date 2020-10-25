@@ -28,15 +28,15 @@
 				color: #f6f6f6;
 			}
 			#left{
-				width: 5%;
-				height: 5%;
+				width: 10%;
+				height: 10%;
 				position: absolute;
 				left: 40%;
 				top:80%;
 			}
 			#right{
-				width: 5%;
-				height: 5%;
+				width: 10%;
+				height: 10%;
 				position: absolute;
 				left: 60%;
 				top:80%;
@@ -74,6 +74,8 @@
 		</style>
 
 		<script>
+			var left = document.getElementById('left');
+			var right = document.getElementById('right');
 			var box = document.getElementById('box');
 			var ball = document.getElementById('ball');
 			var bat = document.getElementById('bat');
@@ -133,9 +135,17 @@
 				ball.style.left = ballx + '%';
 				ball.style.top = bally + '%';
 			}
-
 			document.onkeydown = anim;
-			
+			right.onclick = function(){
+				batleft+=batspeed;
+				bat.style.left = batleft + '%';
+				if(batleft>=62)batleft-=batspeed;
+			};
+			left.onclick = function(){
+				batleft-=batspeed;
+				bat.style.left = batleft + '%';
+				if(batleft<=22)batleft+=batspeed;
+			};
 		</script>	
 	</body>
 </html>
