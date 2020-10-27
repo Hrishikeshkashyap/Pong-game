@@ -3,7 +3,6 @@
 	<head>
 		<title>Gamer</title>
 		<link rel="icon" href="icon.png" type="image/icon type">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<meta charset="UTF-8">
 	</head>
 	<body>
@@ -15,9 +14,7 @@
 		<img src = "box.png" id="box">
 		<img src = "ball.png" id="ball">
 		<img src = "bat.png" id="bat">
-		
-		<button id="left"><i class="fa fa-chevron-left"></i></button>
-		<button id="right"><i class="fa fa-chevron-right"></i></button>
+
 		<style>
 			body{
 				background-image: url("back.jpg");
@@ -27,20 +24,7 @@
 			h1{
 				color: #f6f6f6;
 			}
-			#left{
-				width: 10%;
-				height: 10%;
-				position: absolute;
-				left: 40%;
-				top:80%;
-			}
-			#right{
-				width: 10%;
-				height: 10%;
-				position: absolute;
-				left: 60%;
-				top:80%;
-			}
+			
 			#box{
 				opacity: .7;
 				position: absolute;
@@ -74,38 +58,54 @@
 		</style>
 
 		<script>
-			var left = document.getElementById('left');
-			var right = document.getElementById('right');
 			var box = document.getElementById('box');
 			var ball = document.getElementById('ball');
 			var bat = document.getElementById('bat');
 			var batleft = 45;
 			var batspeed = 3;
 
-			var ballx = 30;
-			var bally = 20;
+			//var ballx = 30;
+			var ballx = Math.round(57*Math.random()+21);
+			//var bally = 20;
+			var bally = Math.round(24*Math.random()+16);
+			//var vx=.5;
 			var vx=.5;
+
+			//var vy=.5;
 			var vy=.5;
+
 			const fps=50;
+
+			//var elasticity=0.8;
 
 			var score=0;
 			setInterval(update, 1000/fps);
 
-			function anim(e){
-				event.preventDefault();
-				//right arrow code
-				if(e.keyCode==39){
-					batleft+=batspeed;
-					bat.style.left = batleft + '%';
-					if(batleft>=62)batleft-=batspeed;
+			setInterval(move,50);
+
+			function move(k){
+				batleft+=batspeed;
+				batspeed=batspeed/1.5;
+				bat.style.left = batleft + '%';
+				if(k.keyCode==68){
+					batspeed = 3;
 				}
-				//left arrow code
-				if(e.keyCode==37){
-					batleft-=batspeed;
-					bat.style.left = batleft + '%';
-					if(batleft<=22)batleft+=batspeed;
+				if(k.keyCode==65){
+					batspeed = -3;
 				}
+				if(batleft>=60&&batspeed>0){
+						batleft=63;
+						batspeed=0;
+					}
+				if(batleft<=26&&batspeed<0){
+						batleft=21;
+						batspeed=0;
+					}
 			}
+			document.onkeydown = move;
+
+
+
 			function update(){
 				ballx+=vx;
 				bally+=vy;
@@ -122,10 +122,27 @@
 				}
 				//bottom score deduction and restarting
 				if(bally>64&&vy>0){
-					 ballx = 30;
-					 bally = 20;
-					 vx=.5;
-					 vy=.5;
+					 //randomising x coordinates
+					 ballx = Math.round(57*Math.random()+21);
+					 //randomising y coordinates
+					 bally = Math.round(24*Math.random()+16);
+					 //randomising x speed
+					 var i=Math.round(2*Math.random()-1);
+			    	 if(i!=0){
+			    	 	vx=0.5*i;
+			    	 }
+			    	 else if(i==0){
+			    	 	vx=0.5;
+			    	 }
+			    	 //randomising y speed
+			    	 var j=Math.round(2*Math.random()-1);
+			    	 if(j!=0){
+			    	 	vy=0.5*j;
+			    	 }
+			    	 else if(j==0){
+			    	 	vy=0.5;
+			    	 }
+						/*Math.round(2*Math.random()-1);*/
 					score=0;
 					document.getElementById('score').innerHTML = score;
 				}
@@ -135,19 +152,8 @@
 				ball.style.left = ballx + '%';
 				ball.style.top = bally + '%';
 			}
-			document.onkeydown = anim;
-			right.onclick = function(){
-				event.preventDefault();
-				batleft+=batspeed;
-				bat.style.left = batleft + '%';
-				if(batleft>=62)batleft-=batspeed;
-			};
-			left.onclick = function(){
-				event.preventDefault();
-				batleft-=batspeed;
-				bat.style.left = batleft + '%';
-				if(batleft<=22)batleft+=batspeed;
-			};
+
+
 		</script>	
 	</body>
 </html>
