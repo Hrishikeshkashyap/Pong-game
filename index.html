@@ -80,30 +80,50 @@
 			var batleft = 45;
 			var batspeed = 3;
 
-			var ballx = 30;
-			var bally = 20;
+			//var ballx = 30;
+			var ballx = Math.round(57*Math.random()+21);
+			//var bally = 20;
+			var bally = Math.round(24*Math.random()+16);
+			//var vx=.5;
 			var vx=.5;
+
+			//var vy=.5;
 			var vy=.5;
+
 			const fps=50;
+
+			//var elasticity=0.8;
 
 			var score=0;
 			setInterval(update, 1000/fps);
 
-			function anim(e){
-				event.preventDefault();
-				//right arrow code
-				if(e.keyCode==39){
-					batleft+=batspeed;
-					bat.style.left = batleft + '%';
-					if(batleft>=62)batleft-=batspeed;
+			
+			setInterval(move,1000/fps);
+			function move(k){
+				batleft+=batspeed;
+				batspeed=batspeed/1.5;
+				bat.style.left = batleft + '%';
+				if(k.keyCode==68){
+					batspeed = 3;
 				}
-				//left arrow code
-				if(e.keyCode==37){
-					batleft-=batspeed;
-					bat.style.left = batleft + '%';
-					if(batleft<=22)batleft+=batspeed;
+				if(k.keyCode==65){
+					batspeed = -3;
 				}
+				if(batleft>=60){
+						batleft=58;
+						batspeed=-0.5*batspeed;
+					}
+				if(batleft<=28){
+						batleft=27;
+						batspeed=-0.5*batspeed;
+					}
+				
+				
 			}
+			document.onkeydown = move;
+
+
+
 			function update(){
 				ballx+=vx;
 				bally+=vy;
@@ -120,10 +140,27 @@
 				}
 				//bottom score deduction and restarting
 				if(bally>64&&vy>0){
-					 ballx = 30;
-					 bally = 20;
-					 vx=.5;
-					 vy=.5;
+					 //randomising x coordinates
+					 ballx = Math.round(57*Math.random()+21);
+					 //randomising y coordinates
+					 bally = Math.round(24*Math.random()+16);
+					 //randomising x speed
+					 var i=Math.round(2*Math.random()-1);
+			    	 if(i!=0){
+			    	 	vx=0.5*i;
+			    	 }
+			    	 else if(i==0){
+			    	 	vx=0.5;
+			    	 }
+			    	 //randomising y speed
+			    	 var j=Math.round(2*Math.random()-1);
+			    	 if(j!=0){
+			    	 	vy=0.5*j;
+			    	 }
+			    	 else if(j==0){
+			    	 	vy=0.5;
+			    	 }
+						/*Math.round(2*Math.random()-1);*/
 					score=0;
 					document.getElementById('score').innerHTML = score;
 				}
@@ -135,7 +172,7 @@
 			}
 
 			document.onkeydown = anim;
-			
+
 		</script>	
 	</body>
 </html>
