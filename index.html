@@ -109,11 +109,11 @@
 				if(k.keyCode==65){
 					batspeed = -3;
 				}
-				if(batleft>=60){
+				if(batleft>=60&&batspeed>0){
 						batleft=58;
 						batspeed=-0.5*batspeed;
 					}
-				if(batleft<=28){
+				if(batleft<=28&&batspeed<0){
 						batleft=27;
 						batspeed=-0.5*batspeed;
 					}
@@ -171,7 +171,6 @@
 				ball.style.top = bally + '%';
 			}
 
-			document.onkeydown = anim;
 
 		</script>	
 	</body>
